@@ -35,9 +35,16 @@ sign-language-vsl/
 └── requirements.txt
 ```
 
-## Quick Start
+## Answer
 
 ### 1. Install
 ```bash
 pip install -r requirements.txt
 ```
+
+### 2. Question
+#### Question 1: 
+```
+python src/extract_hand_keypoints.py --video data/videos/asl_cut.mp4
+```
+
