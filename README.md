@@ -8,7 +8,7 @@ This repository contains 4 core components:
 4. **Annotation Tool (Q4)**: Streamlit-based web app for labeling gestures in video.
 
 # Project Structure
-
+```
 sign-language-vsl/
 ├── data/
 │   ├── videos/                    # Video thô (.mp4)
@@ -33,7 +33,7 @@ sign-language-vsl/
 ├── README.md                      # Giải thích 4 câu hỏi & hướng dẫn
 ├── .gitignore
 └── requirements.txt
-
+```
 
 ## Quick Start
 
