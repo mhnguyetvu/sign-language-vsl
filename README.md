@@ -47,4 +47,8 @@ pip install -r requirements.txt
 ```
 python src/extract_hand_keypoints.py --video data/videos/asl_cut.mp4
 ```
-
+#### Question 2:
+```
+python src/train_gesture_classifier.py --keypoints data/keypoints_filtered.json --labels data/gesture_labels.json
+```
+#### Question 3:
