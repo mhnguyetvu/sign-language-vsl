@@ -2,10 +2,10 @@
 
 This repository contains 4 core components:
 
-1. **Keypoint Extraction (Q1)**: Extract 21 hand landmarks using MediaPipe.
-2. **Gesture Classification (Q2)**: Train a classifier (SVM) to classify gestures from frame keypoints.
-3. **Video Collection (Q3)**: Metadata + storage of at least 50 VSL videos.
-4. **Annotation Tool (Q4)**: Streamlit-based web app for labeling gestures in video.
+1. **Q1**: Viết hàm đã mô phỏng lại cử động từ file JSON
+2. **Q2**: Train mô hình (SVM)  để phân loại 11 cử chỉ trong gesture_labels.json
+3. **Q3**: Tải 50 videos từ youtube.
+4. **Q4**: Xây streamlit-based web app để annotate.
 
 # Project Structure
 ```
@@ -41,8 +41,10 @@ sign-language-vsl/
 ```bash
 pip install -r requirements.txt
 ```
-### Phần 1:  
+ 
 ### 2. Question
+
+### Phần 1: Xử lý ảnh/video
 #### Question 1: 
 ```
 python src/extract_hand_keypoints.py --video data/videos/asl_cut.mp4
@@ -52,7 +54,7 @@ python src/extract_hand_keypoints.py --video data/videos/asl_cut.mp4
 python src/train_gesture_classifier.py --keypoints data/keypoints_filtered.json --labels data/gesture_labels.json
 ```
 
-### Phần 3: 
+### Phần 3: Xây dựng và xử lý dữ liệu
 #### Question 1:
 ```
 python download_vsl_videos.py
