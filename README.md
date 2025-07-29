@@ -41,7 +41,7 @@ sign-language-vsl/
 ```bash
 pip install -r requirements.txt
 ```
-
+### Phần 1:  
 ### 2. Question
 #### Question 1: 
 ```
@@ -51,4 +51,14 @@ python src/extract_hand_keypoints.py --video data/videos/asl_cut.mp4
 ```
 python src/train_gesture_classifier.py --keypoints data/keypoints_filtered.json --labels data/gesture_labels.json
 ```
-#### Question 3:
+
+### Phần 3: 
+#### Question 1:
+```
+python download_vsl_videos.py
+```
+
+#### Question 2:
+```
+streamlit run annotations/annotation_tool/app.py
+```
