@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pkl
+*.log
+
+# Streamlit cache
+.streamlit/
+*.pyde
+
+# Jupyter
+.ipynb_checkpoints
+
+# Data
+data/videos/*
+data/keypoints_*.json
+data/metadata.jsonl
+annotations/annotations.json
+
+# Models
+*.h5
+*.pt
+*.joblib
+*.onnx
+
+# System
+.DS_Store
+.env

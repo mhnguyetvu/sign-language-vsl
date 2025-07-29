@@ -1,0 +1,13 @@
+[
+  {"label": "Hello", "start": 0, "end": 178},
+  {"label": "See you later", "start": 179, "end": 517},
+  {"label": "I or me", "start": 518, "end": 807},
+  {"label": "Father", "start": 808, "end": 1105},
+  {"label": "Mother", "start": 1106, "end": 1320},
+  {"label": "Yes", "start": 1321, "end": 1570},
+  {"label": "No", "start": 1571, "end": 1836},
+  {"label": "Help", "start": 1837, "end": 2213},
+  {"label": "Please", "start": 2214, "end": 2473},
+  {"label": "Thank you", "start": 2474, "end": 2680},
+  {"label": "Want", "start": 2681, "end": 2744}
+]
