@@ -7,8 +7,13 @@ import os
 
 def extract_keypoints(video_path, output_json):
     mp_hands = mp.solutions.hands
-    hands = mp_hands.Hands(static_image_mode=False, max_num_hands=1,
-                           min_detection_confidence=0.5, min_tracking_confidence=0.5)
+    hands = mp_hands.Hands(
+        static_image_mode=False,
+        max_num_hands=2,  
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5,
+    )
+
 
     cap = cv2.VideoCapture(video_path)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -22,16 +27,20 @@ def extract_keypoints(video_path, output_json):
             if not success:
                 break
 
+            frame_data = {"frame": frame_idx, "keypoints": []}
+
+            # ⚠️ Cần chuyển frame sang RGB trước khi dùng MediaPipe
             image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             detection = hands.process(image_rgb)
 
             if detection.multi_hand_landmarks:
-                hand_landmarks = detection.multi_hand_landmarks[0]
-                keypoints = [{"x": lm.x, "y": lm.y, "z": lm.z} for lm in hand_landmarks.landmark]
+                for hand_landmarks in detection.multi_hand_landmarks:
+                    keypoints = [{"x": lm.x, "y": lm.y, "z": lm.z} for lm in hand_landmarks.landmark]
+                    frame_data["keypoints"].append(keypoints)
             else:
-                keypoints = None
+                frame_data["keypoints"] = None
 
-            results.append({"frame": frame_idx, "keypoints": keypoints})
+            results.append(frame_data)
             frame_idx += 1
             pbar.update(1)
 

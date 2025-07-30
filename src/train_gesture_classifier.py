@@ -1,6 +1,5 @@
 import json
 import numpy as np
-import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix
@@ -10,7 +9,35 @@ import argparse
 def load_keypoints(json_file):
     with open(json_file) as f:
         data = json.load(f)
-    frame_to_keypoints = {frame["frame"]: frame["keypoints"] for frame in data if frame["keypoints"] is not None}
+
+    frame_to_keypoints = {}
+    for frame in data:
+        frame_id = frame["frame"]
+        keypoints = frame.get("keypoints", [])
+
+        if not keypoints or not isinstance(keypoints, list):
+            continue  # skip nếu không có tay
+
+        flattened = []
+        try:
+            for hand in keypoints:
+                for kp in hand:
+                    flattened.extend([kp["x"], kp["y"], kp["z"]])
+        except (TypeError, KeyError):
+            print(f"⚠️ Frame {frame_id} có keypoints sai định dạng, bỏ qua.")
+            continue
+
+        # Nếu chỉ có 1 tay → pad thêm 63 chiều (21 điểm * 3)
+        if len(keypoints) == 1:
+            flattened.extend([0.0] * 63)
+
+        if len(flattened) != 126:
+            print(f"⚠️ Frame {frame_id} chiều dữ liệu khác 126, bỏ qua.")
+            continue
+
+        frame_to_keypoints[frame_id] = flattened
+
+    print(f"✅ Đã load {len(frame_to_keypoints)} frames hợp lệ với 2 tay (63x2 = 126 chiều).")
     return frame_to_keypoints
 
 def load_labels(label_file):
@@ -25,13 +52,10 @@ def load_labels(label_file):
 
 def build_dataset(keypoints_data, frame_labels):
     X, y = [], []
-    for frame_id, keypoints in keypoints_data.items():
+    for frame_id, features in keypoints_data.items():
         if frame_id not in frame_labels:
             continue
-        flattened = []
-        for kp in keypoints:
-            flattened.extend([kp["x"], kp["y"], kp["z"]])
-        X.append(flattened)
+        X.append(features)
         y.append(frame_labels[frame_id])
     return np.array(X), np.array(y)
 
@@ -60,8 +84,8 @@ def main(keypoint_file, label_file, model_output):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--keypoints", default="keypoints_filtered.json", help="Path to JSON with keypoints")
-    parser.add_argument("--labels", default="gesture_labels.json", help="Path to gesture label ranges")
+    parser.add_argument("--keypoints", default="./data/keypoints_filtered.json", help="Path to JSON with keypoints")
+    parser.add_argument("--labels", default="./data/gesture_labels.json", help="Path to gesture label ranges")
     parser.add_argument("--model_out", default="gesture_classifier.pkl", help="Output file for trained model")
     args = parser.parse_args()
 
