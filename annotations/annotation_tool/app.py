@@ -12,7 +12,11 @@ if not os.path.exists("annotations"):
 
 st.title("🎥 Video Annotation Tool – Sign Language")
 
-video_files = [f for f in os.listdir(VIDEO_DIR) if f.endswith(".mp4")]
+video_files = [
+    f for f in os.listdir(VIDEO_DIR)
+    if f.endswith(".mp4") and f != "asl_cut.mp4"
+]
+
 selected_video = st.selectbox("🎬 Chọn video để annotate", video_files)
 
 video_path = os.path.join(VIDEO_DIR, selected_video)
