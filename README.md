@@ -51,7 +51,7 @@ python src/extract_hand_keypoints.py --video data/videos/asl_cut.mp4
 ```
 #### Question 2:
 ```
-python src/train_gesture_classifier.py --keypoints data/keypoints_filtered.json --labels data/gesture_labels.json
+python src/train_gesture_classifier.py 
 ```
 
 ### Phần 3: Xây dựng và xử lý dữ liệu
